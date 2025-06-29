@@ -2,6 +2,8 @@ import express, { Request, Response } from 'express';
 import mongoose, { Schema, Document } from 'mongoose';
 const app = express();
 mongoose.connect("mongodb://localhost:27017/shop").then(()=>{
+  console.log("Connection To Mongo")
+}).catch(()=>{
   console.log("Error DB Connection")
 })
 const port = 3000;
