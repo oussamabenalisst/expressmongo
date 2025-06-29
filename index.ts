@@ -6,6 +6,7 @@ mongoose.connect("mongodb://localhost:27017/shop").then(()=>{
 }).catch(()=>{
   console.log("Error DB Connection")
 })
+const product=require("./models/products")
 const port = 3000;
 
 app.get('/', (req: Request, res: Response) => {
