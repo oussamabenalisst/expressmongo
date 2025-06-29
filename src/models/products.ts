@@ -1,15 +1,17 @@
 import mongoose, { Document } from 'mongoose';
-import { float } from 'webidl-conversions';
 const Schema = mongoose.Schema
 
 
 const projectSchema = new Schema({
     name: { type: String },
     class : {type : String},
-    pr : {type : float},
+    pr : {type : Number},
     img : {type : String}
 })
 
-const product = mongoose.model('Product', projectSchema)
+const product = mongoose.model('products', projectSchema)
 module.exports = product
+
+export default product;
+
 
