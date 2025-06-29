@@ -15,24 +15,23 @@ app.get('/', (req: Request, res: Response) => {
 
 app.post('/Addproduct', (req: Request, res: Response) => {
   var Newproduct = new Product()
-  const { name, class:ClassP, pr, img } = req.body;
-  if (
-    !name ||
-    !ClassP ||
-    !pr ||
-    !img 
+  // const { name, class:ClassP, pr, img } = req.body;
+  // if (
+  //   !name ||
+  //   !ClassP ||
+  //   !pr ||
+  //   !img 
 
-  ) {
-    res.send("error input");
-  }else{
-    Newproduct.name = name;
-    Newproduct.class = ClassP;
-    Newproduct.pr = pr;
-    Newproduct.img = img;
-    Newproduct.save().then(() => {
-      res.send('products');
-    })
-  }
+  // ) {
+  //   res.send("error input");
+  // }
+  Newproduct.name = "name";
+  Newproduct.class = "ClassP";
+  Newproduct.pr = 5;
+  Newproduct.img = "img";
+  Newproduct.save().then(() => {
+    res.send('products');
+  })
 });
 
 app.listen(port, () => {
