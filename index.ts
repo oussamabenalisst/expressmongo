@@ -27,12 +27,12 @@ app.post("/Addproduct", (req: Request, res: Response) => {
     if (!nameP || !ClassP || !pr || !img) {
       res.send("error input");
     }
-    Newproduct.name =  nameP ;
+    Newproduct.name = nameP;
     Newproduct.class = ClassP;
     Newproduct.pr = pr;
     Newproduct.img = img;
     Newproduct.save().then(() => {
-      res.send("products");
+      res.send("product add");
     });
   } catch {
     res.send("Error of catch");
