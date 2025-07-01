@@ -25,6 +25,7 @@ app.get("/product/", async (req: Request, res: Response) => {
     res.send(err);
   }
 });
+
 app.get("/product/:name", async (req: Request, res: Response) => {
   try {
     const name = req.params.name;
@@ -37,6 +38,25 @@ app.get("/product/:name", async (req: Request, res: Response) => {
   } catch (err) {
     res.send(err);
   }
+});
+
+app.delete("/product/:name", (req: Request, res: Response) => {
+  if (!req.params.name) {
+    res.status(403).send("name vide");
+    return;
+  }
+  const name = req.params.name;
+  if (name == "" || name.length < 3 || name.length > 50) {
+    res.status(403).send("name not valide");
+    return;
+  }
+  Product.deleteMany({ name: name })
+    .then(() => {
+      res.status(200).send("Good delete");
+    })
+    .catch(() => {
+      res.status(403).send("error delete");
+    });
 });
 
 app.post("/Addproduct", (req: Request, res: Response) => {
