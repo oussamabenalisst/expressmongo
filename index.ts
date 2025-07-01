@@ -26,6 +26,40 @@ app.get("/product/", async (req: Request, res: Response) => {
   }
 });
 
+app.put("/product/:name", async (req: Request, res: Response) => {
+  if (
+    !req.params.name ||
+    req.params.name == "" ||
+    req.params.name.length < 3 ||
+    req.params.name.length > 50
+  ) {
+    res.status(403).send("name not valide");
+    return;
+  }
+  const name = req.params.name;
+  try {
+    const product = await Product.find({ name: name });
+    if (product.length === 0) {
+      res.status(404).send("Product not found");
+      return;
+    }
+    if (!req.body) {
+      res.status(404).send("information not found");
+      return;
+    }
+    const { class: ClassP, pr, img } = req.body;
+    await Product.updateOne({ name: name }, { pr: pr, class: ClassP, img: img })
+      .then(() => {
+        res.status(200).send("Product found,is Good");
+      })
+      .catch(() => {
+        res.status(404).send("no update");
+      });
+  } catch (err) {
+    res.status(500).send("Error fetching product");
+  }
+});
+
 app.get("/product/:name", async (req: Request, res: Response) => {
   try {
     const name = req.params.name;
@@ -40,7 +74,7 @@ app.get("/product/:name", async (req: Request, res: Response) => {
   }
 });
 
-app.delete("/product/:name", (req: Request, res: Response) => {
+app.delete("/product/:name", async (req: Request, res: Response) => {
   if (!req.params.name) {
     res.status(403).send("name vide");
     return;
@@ -50,7 +84,7 @@ app.delete("/product/:name", (req: Request, res: Response) => {
     res.status(403).send("name not valide");
     return;
   }
-  Product.deleteMany({ name: name })
+  await Product.deleteMany({ name: name })
     .then(() => {
       res.status(200).send("Good delete");
     })
