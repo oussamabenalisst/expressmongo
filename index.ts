@@ -17,6 +17,15 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Hello from Express + TypeScript + mongo!");
 });
 
+app.get("/product", async (req: Request, res: Response) => {
+  try {
+    const prd = await Product.find();
+    res.json(prd);
+  } catch (err) {
+    res.send(err);
+  }
+});
+
 app.post("/Addproduct", (req: Request, res: Response) => {
   try {
     if (!req.body) {
@@ -38,10 +47,6 @@ app.post("/Addproduct", (req: Request, res: Response) => {
   } catch {
     res.send("Error of catch");
   }
-});
-
-app.get("/product", (req: Request, res: Response) => {
-  res.send("test");
 });
 
 app.listen(port, () => {
