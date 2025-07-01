@@ -17,9 +17,22 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Hello from Express + TypeScript + mongo!");
 });
 
-app.get("/product", async (req: Request, res: Response) => {
+app.get("/product/", async (req: Request, res: Response) => {
   try {
     const prd = await Product.find();
+    res.json(prd);
+  } catch (err) {
+    res.send(err);
+  }
+});
+app.get("/product/:name", async (req: Request, res: Response) => {
+  try {
+    const name = req.params.name;
+    if (name == "" || name.length < 3 || name.length > 50) {
+      res.status(403).send("name not valide");
+      return;
+    }
+    const prd = await Product.find({ name: name });
     res.json(prd);
   } catch (err) {
     res.send(err);
