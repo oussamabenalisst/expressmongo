@@ -26,6 +26,7 @@ app.post("/Addproduct", (req: Request, res: Response) => {
     const { name: nameP, class: ClassP, pr, img } = req.body;
     if (!nameP || !ClassP || !pr || !img) {
       res.send("error input");
+      return;
     }
     Newproduct.name = nameP;
     Newproduct.class = ClassP;
@@ -37,6 +38,10 @@ app.post("/Addproduct", (req: Request, res: Response) => {
   } catch {
     res.send("Error of catch");
   }
+});
+
+app.get("/product", (req: Request, res: Response) => {
+  res.send("test");
 });
 
 app.listen(port, () => {
